@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agents &amp; Tool Use</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Systems that take actions, and do not take bad ones">
+<script>(function(){try{var t=localStorage.getItem("tfs-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("tfs-side")==="collapsed"&&matchMedia("(min-width:82.001rem)").matches)document.documentElement.classList.add("pre-collapsed");}catch(e){}})();</script>
+<link rel="stylesheet" href="assets/style.css?v=1">
+</head>
+<body>
+<main>
+
+<div class="hero">
+  <h1><span class="num">Course 6 &middot; Applied track</span>Agents &amp; Tool Use</h1>
+  <p class="lead">Building systems that take actions, and keeping them from taking bad ones. You will write an agent loop from nothing, design tools a model uses correctly, manage context and memory over long tasks, connect tools over MCP, build coding and computer-use agents, bound their cost and blast radius, and evaluate trajectories as well as outcomes. Every design decision is tested in an environment you build.</p>
+  <div class="stats">
+    <div><b>18</b> chapters</div>
+    <div><b>~22</b> hours</div>
+    <div><b>5</b> parts</div>
+    <div><b>77</b> sections</div>
+  </div>
+  <div class="bar"><i id="pbar"></i></div>
+  <div class="tiny" style="margin-top:.6rem" id="pnote">Progress is saved in this browser.</div>
+</div>
+
+<div class="box warn">
+<span class="t">Status: outline for review</span>
+<p style="margin-bottom:0">Every chapter page exists and shows its planned sections and what you will build, so you can
+read the course's shape before it is written. Prose, figures, quizzes, exercises, notebooks and the reference package
+(<code>agentkit</code>) follow, chapter by chapter, to the same standard as
+<a href="/transformers-from-scratch/course/index.html">Transformers From Scratch</a>.</p>
+</div>
+
+<h2>Who this is for</h2>
+<p>Engineers who can call a model and want to build something that plans, uses tools and recovers from its mistakes.</p>
+
+<h3>Before you start</h3>
+<ul><li><a class="xref" data-course="transformers" data-ch="13" href="/transformers-from-scratch/course/ch13-decoding.html">Transformers&nbsp;Ch&nbsp;13</a> &mdash; Decoding and Sampling</li><li><a class="xref" data-course="transformers" data-ch="25" href="/transformers-from-scratch/course/ch25-grpo.html">Transformers&nbsp;Ch&nbsp;25</a> &mdash; DPO Variants, GRPO, and RLVR</li><li><a class="xref" data-course="evals" data-ch="13" href="/llm-evaluation/course/ch13-agents.html">Evaluation&nbsp;Ch&nbsp;13</a> &mdash; Evaluating Agents</li><li><a class="xref" data-course="retrieval" data-ch="15" href="/retrieval/course/ch15-context.html">Retrieval&nbsp;Ch&nbsp;15</a> &mdash; Context Engineering</li></ul>
+
+<h2>By the end you can</h2>
+<ul><li>Write an agent harness from scratch and know what each part does</li><li>Design tool interfaces that models use correctly, and measure misuse</li><li>Manage context and memory across hundreds of steps</li><li>Sandbox an agent and bound its cost, time and permissions</li><li>Evaluate agents by end state and reliability, and improve them measurably</li></ul>
+
+<div class="mn"><span class="k">Current to</span>November 2026. The agent harness as the unit of design (model + tools + context policy); MCP for tools and A2A for agent-to-agent delegation; context compaction and subagents for context isolation; skills as procedural memory loaded on demand; coding agents with test-driven loops; computer-use agents over screenshots and accessibility trees; state-checked agent benchmarks and pass^k; agentic RL training the models these harnesses run.</div>
+
+<h2>The course</h2>
+<div class="parts" id="parts"></div>
+
+<h2>The capstone</h2>
+<p>A coding or research agent with a sandbox, budgets, a state-checked evaluation environment, and a measured improvement from one change to its harness.</p>
+
+<h2>Colour is meaning</h2>
+<p>In this course the five semantic hues mark these roles, never decoration:</p>
+<div class="tw"><table class="hues"><tbody><tr><td><span class="hue" style="background:var(--dim-1)"></span></td><td>the model</td></tr><tr><td><span class="hue" style="background:var(--dim-2)"></span></td><td>a tool</td></tr><tr><td><span class="hue" style="background:var(--dim-3)"></span></td><td>the environment</td></tr><tr><td><span class="hue" style="background:var(--dim-4)"></span></td><td>the context window</td></tr><tr><td><span class="hue" style="background:var(--dim-5)"></span></td><td>the human</td></tr></tbody></table></div>
+
+<h2>Deliberately not covered</h2>
+<p>Robotics, and agent frameworks taught as products (the course builds the parts instead).</p>
+
+<div style="margin-top:2.5rem;display:flex;gap:.7rem;align-items:center;flex-wrap:wrap">
+  <a class="btn primary" href="ch01-loop.html" style="text-decoration:none;border-bottom:0">Read the outline of Chapter 1 &rarr;</a>
+  <a class="btn" href="/" style="text-decoration:none;border-bottom:0">The library</a>
+</div>
+
+</main>
+
+<script src="assets/chapters.js?v=1"></script>
+<script src="assets/course.js?v=1"></script>
+<script>
+(function () {
+  const wrap = document.getElementById("parts");
+  PARTS.forEach((p, pi) => {
+    const d = document.createElement("div");
+    d.className = "part";
+    d.dataset.pi = pi;
+    d.innerHTML =
+      `<div class="ph"><span class="pn">${p.n}</span><span class="pt">${p.t}</span>` +
+      `<span class="pd">${p.d}</span></div><div class="clist">` +
+      p.ch.map(c => `
+        <a class="ccard ${isDone(c.id) ? "done" : ""}" href="${c.f}">
+          <div class="num">${c.id}</div>
+          <div class="txt"><div class="t">${c.t}</div><div class="s">${c.s}</div></div>
+          <div class="tag">${c.tag}</div>
+        </a>`).join("") + `</div>`;
+    wrap.appendChild(d);
+  });
+  const done = CHAPTERS.filter(c => isDone(c.id)).length;
+  document.getElementById("pbar").style.width = (done / CHAPTERS.length * 100) + "%";
+  document.getElementById("pnote").textContent = Store.available()
+    ? `${done} of ${CHAPTERS.length} chapters complete. Progress is saved in this browser, shared with every course in the library.`
+    : "Progress can’t be saved here: browser storage is blocked.";
+  buildLayout(); buildTopbar(null); buildSidebar(null); decorateCode();
+  initReadingBar(); initKeyboard(null); applySidebarPref(); layoutMarginNotes();
+  window.addEventListener("load", layoutMarginNotes);
+  let rt;
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { applySidebarPref(); layoutMarginNotes(); }, 100); });
+})();
+</script>
+</body>
+</html>
